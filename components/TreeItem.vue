@@ -4,7 +4,7 @@
         @click="toggleChildren"
         class="flex gap-2 items-center"
     >
-      <NuxtLink :to="item.locale[selectedLang].link" class="flex flex-col">
+      <NuxtLink :to="link" class="flex flex-col">
         {{ nameItem }}
         <small class="text-gray-500">{{ breadcrumbs }}</small>
       </NuxtLink>
@@ -50,6 +50,14 @@ const toggleChildren = () => {
   showChildren.value = !showChildren.value;
 };
 
+const link = computed(() => {
+  for (const url in props.item.locale ) {
+    const link = props.item.locale[url]?.link;
+    if (link) {
+      return link;
+    }
+  }
+});
 
 const nameItem = computed(() => {
   const selectName = props.item.locale[selectedLang.value]?.cg_name;
